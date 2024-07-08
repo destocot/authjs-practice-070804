@@ -129,3 +129,5 @@ pnpm add argon2
 ```
 
 12. Signin Form
+
+-- END OF PART 1 --
