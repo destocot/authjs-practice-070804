@@ -210,3 +210,83 @@ export const users = pgTable("user", {
 18. Setup Postgrse through Neon.tech
 
 [neon.tech](https://neon.tech)
+
+18.1 Create new database authdb
+
+18.2 Copy connection string
+
+18.3 Create .env file
+
+```.env
+DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<dbname>?sslmode=require"
+```
+
+18.4 Add to .gitignore
+
+19. Generate
+
+```json
+"db:generate": "drizzle-kit generate"
+```
+
+```bash
+pnpm drizzle-kit generate
+```
+
+20. Migrate
+
+21.1 Neon serverless driver
+
+```bash
+pnpm add @neondatabase/serverless
+```
+
+```json
+"db:migrate": "drizzle-kit migrate"
+```
+
+```bash
+pnpm drizzle-kit migrate
+```
+
+21. Check Neon.tech Dashboard
+
+21.1 Check drizzle-kit studio
+
+```json
+"db:studio": "drizzle-kit studio"
+```
+
+```bash
+pnpm drizzle-kit studio
+```
+
+22. Create drizzle instance src/drizzle/index.ts
+
+```ts
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+import * as schema from "./schema";
+
+const DATABASE_URL = process.env.DATABASE_URL ?? "";
+
+const sql = neon(DATABASE_URL);
+
+const db = drizzle(sql, { schema });
+
+export default db;
+```
+
+23. Signup User
+
+23.1 Confirm in neon console
+
+23.2 Confirm in drizzle-kit studio
+
+24. Potential Errors
+
+24.1 Conflicted User
+
+25. Success Case
+
+26. Redirect Links

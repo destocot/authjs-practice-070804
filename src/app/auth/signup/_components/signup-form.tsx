@@ -15,8 +15,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signupUser } from "@/actions/signup-action";
+import { useState } from "react";
+import Link from "next/link";
 
 export const SignupForm = () => {
+  const [success, setSuccess] = useState(false);
+
   const form = useForm<SignupInput>({
     resolver: valibotResolver(SignupSchema),
     defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
@@ -28,7 +32,8 @@ export const SignupForm = () => {
     const res = await signupUser(values);
 
     if (res.success) {
-      // reset();
+      reset();
+      setSuccess(true);
     } else {
       switch (res.statusCode) {
         case 400:
@@ -40,6 +45,9 @@ export const SignupForm = () => {
             });
           }
           break;
+        case 409:
+          setError("confirmPassword", { message: res.error });
+          break;
         case 500:
         default:
           const error = res.error || "Internal Server Error";
@@ -48,9 +56,25 @@ export const SignupForm = () => {
     }
   };
 
+  if (success) {
+    return (
+      <div>
+        <p>User successfully created!</p>
+
+        <span>
+          Click{" "}
+          <Button variant="link" size="sm" className="px-0" asChild>
+            <Link href="/auth/signin">here</Link>
+          </Button>{" "}
+          to sign in.
+        </span>
+      </div>
+    );
+  }
+
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(submit)} className="space-y-8 max-w-[400px]">
+      <form onSubmit={handleSubmit(submit)} className="max-w-[400px] space-y-6">
         <FormField
           control={control}
           name="name"

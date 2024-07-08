@@ -21,34 +21,15 @@ export const SigninForm = () => {
     defaultValues: { email: "", password: "" },
   });
 
-  const { handleSubmit, control, formState, reset, setError } = form;
+  const { handleSubmit, control, formState } = form;
 
   const submit = async (values: SigninInput) => {
-    const res = await signinUser(values);
-
-    if (res.success) {
-      // reset();
-    } else {
-      //   switch (res.statusCode) {
-      //     case 400:
-      //       const nestedErrors = res.error.nested;
-      //       for (const key in nestedErrors) {
-      //         setError(key as keyof SignupInput, {
-      //           message: nestedErrors[key]?.[0],
-      //         });
-      //       }
-      //       break;
-      //     case 500:
-      //     default:
-      //       const error = res.error || "Internal Server Error";
-      //       setError("confirmPassword", { message: error });
-      //   }
-    }
+    await signinUser(values);
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(submit)} className="space-y-8 max-w-[400px]">
+      <form onSubmit={handleSubmit(submit)} className="max-w-[400px] space-y-6">
         <FormField
           control={control}
           name="email"
