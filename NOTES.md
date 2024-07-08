@@ -290,3 +290,5 @@ export default db;
 25. Success Case
 
 26. Redirect Links
+
+-- END OF PART 2 --
