@@ -18,13 +18,28 @@ import { signinUser } from "@/actions/signin-action";
 export const SigninForm = () => {
   const form = useForm<SigninInput>({
     resolver: valibotResolver(SigninSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: "bartender@example.com", password: "" },
   });
 
-  const { handleSubmit, control, formState } = form;
+  const { handleSubmit, control, formState, reset, setError } = form;
 
   const submit = async (values: SigninInput) => {
-    await signinUser(values);
+    const res = await signinUser(values);
+
+    if (res.success) {
+      reset();
+      window.location.href = "/dashboard";
+    } else {
+      switch (res.statusCode) {
+        case 401:
+          setError("password", { message: res.error });
+          break;
+        case 500:
+        default:
+          const error = res.error || "Internal Server Error";
+          setError("password", { message: error });
+      }
+    }
   };
 
   return (

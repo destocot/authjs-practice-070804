@@ -292,3 +292,150 @@ export default db;
 26. Redirect Links
 
 -- END OF PART 2 --
+
+27. Setup src/auth.ts
+
+27.1 Auth Secret
+
+```bash
+openssl rand -base64 32
+```
+
+```.env
+AUTH_SECRET="FILL_ME"
+```
+
+27.2 AUTH Url
+
+```.env
+AUTH_URL="FILL_ME"
+```
+
+27.3 Parse Credentials
+
+27.4 resources/user-queries.ts
+
+27.5 server-only
+
+```bash
+pnpm add server-only
+```
+
+27.6 findUserByEmail
+
+```ts
+import "server-only";
+import db from "@/drizzle";
+import { users } from "@/drizzle/schema";
+import { eq } from "drizzle-orm";
+
+export const findUserByEmail = async (email: string) => {
+  const [user] = await db.select().from(users).where(eq(users.email, email));
+
+  return user;
+};
+```
+
+28. Test signin and just log user from `findUserByEmail`
+
+29. Finish signin
+
+30. Handle simple next errors in catch block
+
+<!-- at time of making need CallbackRouteError -->
+
+```ts
+err instanceof AuthError;
+```
+
+31. Return `{success: true}` and navigate to /dashboard from router
+
+31.1 Create `/dashboard`
+
+32. Get session information on `/dashboard`
+
+32.1 `auth` in config function
+
+32.2 display as table
+
+33. Create Reusable Signout Button
+
+33.1 Signout Action
+
+34. Fix Navbar (Client Components)
+
+34.1 NavbarLinks component
+
+34.2 Show Why Client Component
+
+```bash
+pnpm build
+```
+
+```
+Route (app)                              Size     First Load JS
+┌ ○ /                                    138 B          87.2 kB
+├ ○ /_not-found                          870 B          87.9 kB
+├ ○ /auth/signin                         2.23 kB         115 kB
+├ ○ /auth/signup                         2.63 kB         115 kB
+└ ƒ /dashboard                           970 B           103 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+```
+
+34.3 Add Session in Navbar Links
+
+```bash
+pnpm build
+```
+
+```
+Route (app)                              Size     First Load JS
+┌ ƒ /                                    138 B          87.2 kB
+├ ƒ /_not-found                          870 B          87.9 kB
+├ ƒ /auth/signin                         2.23 kB         115 kB
+├ ƒ /auth/signup                         2.63 kB         115 kB
+└ ƒ /dashboard                           973 B           102 kB
++ First Load JS shared by all            87 kB
+  ├ chunks/221-ff7197e993faaac0.js       31.5 kB
+  ├ chunks/67cfe1a8-2f40a60ff5c8d7b6.js  53.6 kB
+  └ other shared chunks (total)          1.89 kB
+
+
+ƒ  (Dynamic)  server-rendered on demand
+```
+
+35 Piece by Piece Show How to Do Client Component
+
+36 `useSession` hook
+
+36 SessionProvider
+
+37 Route Handlers
+
+38 Show Build
+
+```bash
+pnpm build
+```
+
+```
+Route (app)                              Size     First Load JS
+┌ ○ /                                    138 B          87.2 kB
+├ ○ /_not-found                          870 B            88 kB
+├ ƒ /api/auth/[...nextauth]              0 B                0 B
+├ ○ /auth/signin                         2.23 kB         115 kB
+├ ○ /auth/signup                         2.65 kB         115 kB
+└ ƒ /dashboard                           973 B           102 kB
++ First Load JS shared by all            87.1 kB
+  ├ chunks/221-dbfd152da9955075.js       31.5 kB
+  ├ chunks/67cfe1a8-28cca3503bcbb8a1.js  53.6 kB
+  └ other shared chunks (total)          1.95 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+```
+
+39. Show Full sign in - sign out flow

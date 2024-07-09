@@ -1,35 +1,40 @@
 "use server";
 
-import { SignupSchema } from "@/validators/signup-validator";
-import * as v from "valibot";
-import argon2 from "argon2";
+import { signIn } from "@/auth";
+import { AuthError } from "next-auth";
 
 type SignupUserRes =
   | { success: true }
-  | { success: false; error: v.FlatErrors<undefined>; statusCode: 400 }
-  | { success: false; error: string; statusCode: 500 };
+  | { success: false; error: string; statusCode: 401 | 500 };
 
 export async function signinUser(values: unknown): Promise<SignupUserRes> {
-  // LOGIC TO BE MOVED TO AUTHJS CONFIGURATION
+  try {
+    if (typeof values !== "object") throw new Error();
 
-  return { success: true };
+    await signIn("credentials", { ...values, redirect: false });
 
-  // const parsedValues = v.safeParse(SignupSchema, values);
+    return { success: true };
+  } catch (err) {
+    if (err instanceof AuthError) {
+      switch (err.type) {
+        case "CredentialsSignin":
+        case "CallbackRouteError":
+          return {
+            success: false,
+            error: "Invalid credentials",
+            statusCode: 401,
+          };
+        default:
+          return {
+            error: "Something went wrong",
+            statusCode: 500,
+            success: false,
+          };
+      }
+    }
 
-  // if (!parsedValues.success) {
-  //   const flattenedIssues = v.flatten(parsedValues.issues);
-  //   return { success: false, error: flattenedIssues, statusCode: 400 };
-  // }
+    console.error(err);
 
-  // const { name, email, password } = parsedValues.output;
-
-  // const hashedPassword = await argon2.hash(password);
-
-  // try {
-  //   // TODO: Save user to database
-  //   return { success: true };
-  // } catch (err) {
-  //   console.error(err);
-  //   return { success: false, error: "Internal Server Error", statusCode: 500 };
-  // }
+    return { success: false, error: "Internal Server Error", statusCode: 500 };
+  }
 }
