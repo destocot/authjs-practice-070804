@@ -9,9 +9,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { oauthSigninUser } from "@/actions/oauth-signin-action";
 
-type OauthButtonsProps = { page: "signup" | "signin" };
+type OAuthButtonsProps = { page: "signup" | "signin" };
 
-export const OauthButtons = ({ page }: OauthButtonsProps) => {
+export const OAuthButtons = ({ page }: OAuthButtonsProps) => {
   const text = page === "signup" ? "Sign up" : "Sign in";
 
   const onClick = async (provider: "google" | "github") => {

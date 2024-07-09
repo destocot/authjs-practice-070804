@@ -7,9 +7,9 @@ import { useSession } from "next-auth/react";
 import { Loader2Icon } from "lucide-react";
 
 export const NavbarLinks = () => {
-  const session = useSession();
+  const { status } = useSession();
 
-  switch (session.status) {
+  switch (status) {
     case "loading":
       return <Loading />;
     case "unauthenticated":

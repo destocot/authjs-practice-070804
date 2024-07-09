@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { SigninForm } from "./_components/signin-form";
 import Link from "next/link";
-import { OauthButtons } from "@/components/oauth-buttons";
+import { OAuthButtons } from "@/components/oauth-buttons";
 
 export default function Page() {
   return (
@@ -15,7 +15,7 @@ export default function Page() {
 
         {/* Oauth Links */}
         <div className="my-2 h-1 bg-muted" />
-        <OauthButtons page="signin" />
+        <OAuthButtons page="signin" />
 
         {/* Go to Signup Link  */}
         <div className="my-2 h-1 bg-muted" />

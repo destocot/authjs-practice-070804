@@ -1,19 +1,20 @@
 "use client";
 
-import { signoutUser } from "@/actions/signout-action";
 import { Button } from "@/components/ui/button";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export const SignoutButton = () => {
+  const router = useRouter();
+
   const onClick = async () => {
-    await signoutUser();
-    window.location.href = "/";
+    await signOut({ redirect: false });
+    router.replace("/");
   };
 
   return (
-    <>
-      <Button variant="destructive" onClick={onClick}>
-        Sign Out
-      </Button>
-    </>
+    <Button variant="destructive" onClick={onClick}>
+      Sign Out
+    </Button>
   );
 };

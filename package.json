@@ -12,6 +12,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^1.4.1",
     "@hookform/resolvers": "^3.9.0",
     "@icons-pack/react-simple-icons": "^9.6.0",
     "@neondatabase/serverless": "^0.9.4",

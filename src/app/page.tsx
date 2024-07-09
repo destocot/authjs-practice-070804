@@ -16,13 +16,13 @@ export default function Page() {
           <Li done>Credentials Provider</Li>
           <Li done>Protect Pages</Li>
           <Li done>Signout</Li>
-          <Li done>Google Oauth Provider</Li>
-          <Li>Github Oauth Provider</Li>
-          <Li>Auth.js Drizzle Adapter</Li>
+          <Li done>Google OAuth Provider</Li>
+          <Li done>Github OAuth Provider</Li>
+          <Li done>Auth.js Drizzle Adapter</Li>
           <Li>Extend Session Information</Li>
-          <Li>Auth.js Session Events</Li>
           <Li>Auth.js Session Callbacks</Li>
-          <Li>Update Session</Li>
+          <Li>Auth.js Session Events</Li>
+          <Li>Update Session (Client)</Li>
           <Li>allowDangerousEmailAccountLinking</Li>
           <Li>User Roles</Li>
           <Li>Admin Dashboard</Li>

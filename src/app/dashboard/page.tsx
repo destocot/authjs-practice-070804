@@ -6,7 +6,7 @@ import { SignoutButton } from "@/components/signout-button";
 
 export default async function Page() {
   const session = await auth();
-  console.log(session);
+  // console.log(session);
 
   return (
     <main className="mt-4">
@@ -28,17 +28,21 @@ const SignedIn = ({ user }: { user: User }) => {
       <table className="mt-4 table-auto divide-y">
         <thead>
           <tr className="divide-x">
+            <th className="bg-primary-foreground px-6 py-3 text-start">id</th>
             <th className="bg-primary-foreground px-6 py-3 text-start">name</th>
             <th className="bg-primary-foreground px-6 py-3 text-start">
               email
             </th>
+            <th className="bg-primary-foreground px-6 py-3 text-start">role</th>
           </tr>
         </thead>
 
         <tbody>
           <tr className="divide-x">
+            <td className="px-6 py-3">{user.id}</td>
             <td className="px-6 py-3">{user.name}</td>
             <td className="px-6 py-3">{user.email}</td>
+            <td className="px-6 py-3 uppercase">{user.role}</td>
           </tr>
         </tbody>
       </table>

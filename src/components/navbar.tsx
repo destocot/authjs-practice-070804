@@ -9,7 +9,7 @@ export const Navbar = () => {
           <Link href="/">Auth.js V5 Tutorial</Link>
         </h3>
 
-        <ul className="flex items-center gap-x-4">
+        <ul id="navbar-links" className="flex items-center gap-x-4">
           <NavbarLinks />
         </ul>
       </div>

@@ -1,17 +1,58 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
+import Github from "next-auth/providers/github";
 import argon2 from "argon2";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import * as v from "valibot";
 import { SigninSchema } from "@/validators/signin-validator";
 import { findUserByEmail } from "@/resources/user-queries";
+import db from "@/drizzle";
+import * as schema from "@/drizzle/schema";
+import type { Adapter } from "next-auth/adapters";
+
+// const x = DrizzleAdapter(db).createUser;
+// console.log(x?.toString());
+import type { AdapterUser } from "next-auth/adapters";
+import { getTableColumns } from "drizzle-orm";
 
 const nextAuth = NextAuth({
+  adapter: {
+    ...(DrizzleAdapter(db, {
+      accountsTable: schema.accounts,
+      usersTable: schema.users,
+      authenticatorsTable: schema.authenticators,
+      sessionsTable: schema.sessions,
+      verificationTokensTable: schema.verificationTokens,
+    }) as Adapter),
+    async createUser(data: AdapterUser) {
+      console.log("createUser.data", data);
+      const { id, ...insertData } = data;
+      const hasDefaultId = getTableColumns(schema.users)["id"]["hasDefault"];
+
+      return db
+        .insert(schema.users)
+        .values(hasDefaultId ? insertData : { ...insertData, id })
+        .returning()
+        .then((res) => res[0]);
+    },
+  },
   session: { strategy: "jwt" },
   secret: process.env.AUTH_SECRET,
   pages: { signIn: "/auth/signin" },
-  callbacks: {},
-  events: {},
+  callbacks: {
+    jwt({ token, user }) {
+      if (user?.id) token.id = user.id;
+      if (user?.role) token.role = user.role;
+
+      return token;
+    },
+    session({ session, token }) {
+      session.user.id = token.id;
+      session.user.role = token.role;
+      return session;
+    },
+  },
   providers: [
     Credentials({
       async authorize(credentials) {
@@ -33,6 +74,10 @@ const nextAuth = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+    Github({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
   ],
 });

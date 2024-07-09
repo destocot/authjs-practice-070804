@@ -490,4 +490,61 @@ pnpm add @icons-pack/react-simple-icons
 
 43.1 Github Signin Also
 
-44. Setup Github Oauth
+44. Test Google SignIn
+
+45. Setup Github Oauth
+
+45.1. Settings
+
+45.2. Developer settings
+
+45.3 Oauth apps
+
+45.5 New OAuth App
+
+- App name -> AuthJS Tutorial
+- Homepage URL -> http://localhost:3000
+- Authorizaton callback URL -> http://localhost:3000/api/auth/callback/github
+- Register Application
+
+  45.6 Client Id and Client Secret
+
+```.env
+GITHUB_CLIENT_ID="FILL_ME"
+GITHUB_CLIENT_SECRET="FILL_ME"
+```
+
+46. Test GitHub
+
+47. Drizzle Adapter
+
+```bash
+pnpm add @auth/drizzle-adapter
+```
+
+48. `auth.ts`
+
+```bash
+# Works with just DATABASE_URL (but following the guide)
+AUTH_DRIZZLE_URL="SAME_AS_DATABASE_URL
+```
+
+```ts
+adapter: DrizzleAdapter(db);
+```
+
+48.1 Show in Neon console
+
+49. Extend Session Information
+
+50. Callbacks `jwt` and `session`
+
+51. Typescript Types
+
+52. Just do id
+
+53. Now do role
+
+54. Update Drizzle Adapter
+
+https://github.com/nextauthjs/next-auth/blob/main/packages/adapter-drizzle/src/lib/pg.ts
