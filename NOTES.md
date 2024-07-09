@@ -441,3 +441,53 @@ Route (app)                              Size     First Load JS
 39. Show Full sign in - sign out flow
 
 -- END OF PART 3 --
+
+40. Google OAuth
+
+[Google Cloud Console](https://console.cloud.google.com/)
+
+40.1 NEW PROJECT
+
+- Project name -> authjs-tutorial
+- Select Project Dropdown
+
+  40.2 APIs & Services
+
+- OAuth consent screen
+- External -> CREATE
+- App name -> AuthJS Tutorial
+- User support email -> <...@gmail.com>
+- Developer contact information -> <...@gmail.com>
+
+  40.3 ADD OR REMOVE SCOPES
+
+- .../auth/userinfo.email
+- .../auth/userinfo.profile
+
+  40.4 Credentials
+
+- CREATE CREDENTIALS
+- OAuth client ID
+- Application type -> Web application
+- Name -> authjs-tutorial-web-client
+- Authorized JavaScript origins -> `http://localhost:3000`
+- Authorized redirect URIs -> `http://localhost:3000/api/auth/callback/google`
+
+41. Client Id and Client Secret
+
+```.env
+GOOGLE_CLIENT_ID="FILL_ME"
+GOOGLE_CLIENT_SECRET="FILL_ME"
+```
+
+42. Simple Icons
+
+```bash
+pnpm add @icons-pack/react-simple-icons
+```
+
+43. Create Google Signin Button
+
+43.1 Github Signin Also
+
+44. Setup Github Oauth

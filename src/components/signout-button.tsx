@@ -11,7 +11,7 @@ export const SignoutButton = () => {
 
   return (
     <>
-      <Button variant="destructive" size="sm" onClick={onClick}>
+      <Button variant="destructive" onClick={onClick}>
         Sign Out
       </Button>
     </>

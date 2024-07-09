@@ -22,6 +22,7 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           {children}
+          <div className="h-4" />
         </Providers>
       </body>
     </html>

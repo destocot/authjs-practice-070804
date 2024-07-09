@@ -1,18 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { SigninForm } from "./_components/signin-form";
 import Link from "next/link";
+import { OauthButtons } from "@/components/oauth-buttons";
 
 export default function Page() {
   return (
     <main className="mt-4">
       <div className="container">
         <h1 className="text-3xl font-bold tracking-tight">Sign In</h1>
-        <div className="my-2 h-1 bg-muted" />
 
         {/* Signin Form */}
+        <div className="my-2 h-1 bg-muted" />
         <SigninForm />
 
         {/* Oauth Links */}
+        <div className="my-2 h-1 bg-muted" />
+        <OauthButtons page="signin" />
 
         {/* Go to Signup Link  */}
         <div className="my-2 h-1 bg-muted" />
