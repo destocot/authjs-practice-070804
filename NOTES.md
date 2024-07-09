@@ -439,3 +439,5 @@ Route (app)                              Size     First Load JS
 ```
 
 39. Show Full sign in - sign out flow
+
+-- END OF PART 3 --
