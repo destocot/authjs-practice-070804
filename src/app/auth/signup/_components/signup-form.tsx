@@ -15,25 +15,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signupUser } from "@/actions/signup-action";
-import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export const SignupForm = () => {
-  const [success, setSuccess] = useState(false);
+  const router = useRouter();
 
   const form = useForm<SignupInput>({
     resolver: valibotResolver(SignupSchema),
     defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
   });
 
-  const { handleSubmit, control, formState, reset, setError } = form;
+  const { handleSubmit, control, formState, setError } = form;
 
   const submit = async (values: SignupInput) => {
     const res = await signupUser(values);
 
     if (res.success) {
-      reset();
-      setSuccess(true);
+      router.push("/auth/signup/success");
     } else {
       switch (res.statusCode) {
         case 400:
@@ -55,22 +53,6 @@ export const SignupForm = () => {
       }
     }
   };
-
-  if (success) {
-    return (
-      <div>
-        <p>User successfully created!</p>
-
-        <span>
-          Click{" "}
-          <Button variant="link" size="sm" className="px-0" asChild>
-            <Link href="/auth/signin">here</Link>
-          </Button>{" "}
-          to sign in.
-        </span>
-      </div>
-    );
-  }
 
   return (
     <Form {...form}>

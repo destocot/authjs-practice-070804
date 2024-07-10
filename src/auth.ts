@@ -9,34 +9,15 @@ import { SigninSchema } from "@/validators/signin-validator";
 import { findUserByEmail } from "@/resources/user-queries";
 import db from "@/drizzle";
 import * as schema from "@/drizzle/schema";
-import type { Adapter } from "next-auth/adapters";
-
-// const x = DrizzleAdapter(db).createUser;
-// console.log(x?.toString());
-import type { AdapterUser } from "next-auth/adapters";
-import { getTableColumns } from "drizzle-orm";
 
 const nextAuth = NextAuth({
-  adapter: {
-    ...(DrizzleAdapter(db, {
-      accountsTable: schema.accounts,
-      usersTable: schema.users,
-      authenticatorsTable: schema.authenticators,
-      sessionsTable: schema.sessions,
-      verificationTokensTable: schema.verificationTokens,
-    }) as Adapter),
-    async createUser(data: AdapterUser) {
-      console.log("createUser.data", data);
-      const { id, ...insertData } = data;
-      const hasDefaultId = getTableColumns(schema.users)["id"]["hasDefault"];
-
-      return db
-        .insert(schema.users)
-        .values(hasDefaultId ? insertData : { ...insertData, id })
-        .returning()
-        .then((res) => res[0]);
-    },
-  },
+  adapter: DrizzleAdapter(db, {
+    accountsTable: schema.accounts,
+    usersTable: schema.users,
+    authenticatorsTable: schema.authenticators,
+    sessionsTable: schema.sessions,
+    verificationTokensTable: schema.verificationTokens,
+  }),
   session: { strategy: "jwt" },
   secret: process.env.AUTH_SECRET,
   pages: { signIn: "/auth/signin" },
@@ -82,4 +63,4 @@ const nextAuth = NextAuth({
   ],
 });
 
-export const { signIn, signOut, auth, handlers } = nextAuth;
+export const { signIn, auth, handlers } = nextAuth;

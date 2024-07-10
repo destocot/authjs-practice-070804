@@ -14,20 +14,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signinUser } from "@/actions/signin-action";
+import { useRouter } from "next/navigation";
 
 export const SigninForm = () => {
   const form = useForm<SigninInput>({
     resolver: valibotResolver(SigninSchema),
-    defaultValues: { email: "bartender@example.com", password: "" },
+    defaultValues: { email: "bartender@example.com", password: "glassofgod" },
   });
 
-  const { handleSubmit, control, formState, reset, setError } = form;
+  const { handleSubmit, control, formState, setError } = form;
 
+  const router = useRouter();
   const submit = async (values: SigninInput) => {
     const res = await signinUser(values);
 
     if (res.success) {
-      reset();
       window.location.href = "/dashboard";
     } else {
       switch (res.statusCode) {

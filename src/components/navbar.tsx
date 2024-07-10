@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { NavbarLinks } from "./navbar-links";
+import { Button } from "@/components/ui/button";
+import { HomeIcon } from "lucide-react";
 
 export const Navbar = () => {
   return (
@@ -10,6 +12,13 @@ export const Navbar = () => {
         </h3>
 
         <ul id="navbar-links" className="flex items-center gap-x-4">
+          <li>
+            <Button size="icon" className="size-9" asChild>
+              <Link href="/">
+                <HomeIcon />
+              </Link>
+            </Button>
+          </li>
           <NavbarLinks />
         </ul>
       </div>

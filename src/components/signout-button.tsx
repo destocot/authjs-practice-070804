@@ -2,18 +2,19 @@
 
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 export const SignoutButton = () => {
-  const router = useRouter();
-
   const onClick = async () => {
-    await signOut({ redirect: false });
-    router.replace("/");
+    try {
+      await signOut({ redirect: false });
+      window.location.href = "/";
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
-    <Button variant="destructive" onClick={onClick}>
+    <Button variant="destructive" size="sm" onClick={onClick}>
       Sign Out
     </Button>
   );

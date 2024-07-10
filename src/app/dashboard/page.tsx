@@ -6,7 +6,6 @@ import { SignoutButton } from "@/components/signout-button";
 
 export default async function Page() {
   const session = await auth();
-  // console.log(session);
 
   return (
     <main className="mt-4">

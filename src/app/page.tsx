@@ -19,8 +19,10 @@ export default function Page() {
           <Li done>Google OAuth Provider</Li>
           <Li done>Github OAuth Provider</Li>
           <Li done>Auth.js Drizzle Adapter</Li>
-          <Li>Extend Session Information</Li>
-          <Li>Auth.js Session Callbacks</Li>
+          <Li done>Extend Session Information</Li>
+          <Li done>Auth.js Extend Types</Li>
+          <Li done>Auth.js Session Callbacks</Li>
+          <Li done>Error Page</Li>
           <Li>Auth.js Session Events</Li>
           <Li>Update Session (Client)</Li>
           <Li>allowDangerousEmailAccountLinking</Li>
@@ -32,7 +34,7 @@ export default function Page() {
         </ul>
 
         <div className="my-2 h-1 bg-muted" />
-        <h2 className="text-2xl font-bold tracking-tight">Created With</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Created with</h2>
 
         <ul className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
           <Li done>Next.js</Li>

@@ -26,9 +26,9 @@ export async function signinUser(values: unknown): Promise<SignupUserRes> {
           };
         default:
           return {
+            success: false,
             error: "Something went wrong",
             statusCode: 500,
-            success: false,
           };
       }
     }

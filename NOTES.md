@@ -526,6 +526,7 @@ pnpm add @auth/drizzle-adapter
 
 ```bash
 # Works with just DATABASE_URL (but following the guide)
+# might not be needed at all
 AUTH_DRIZZLE_URL="SAME_AS_DATABASE_URL
 ```
 
@@ -548,3 +549,7 @@ adapter: DrizzleAdapter(db);
 54. Update Drizzle Adapter
 
 https://github.com/nextauthjs/next-auth/blob/main/packages/adapter-drizzle/src/lib/pg.ts
+
+55. install `@auth/core`
+
+56. Update Adapter types in `auth-core.d.ts`
