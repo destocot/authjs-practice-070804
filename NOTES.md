@@ -557,3 +557,5 @@ https://github.com/nextauthjs/next-auth/blob/main/packages/adapter-drizzle/src/l
 57. Event to update emailVerified for OAuth users
 
 -- END OF PART 4 --
+
+58.
