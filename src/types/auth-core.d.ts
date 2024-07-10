@@ -4,5 +4,6 @@ import { users } from "@/drizzle/schema";
 declare module "@auth/core/adapters" {
   export interface AdapterUser extends DefaultAdapterUser {
     role: (typeof users.$inferSelect)["role"];
+    emailVerified: (typeof users.$inferSelect)["emailVerified"];
   }
 }

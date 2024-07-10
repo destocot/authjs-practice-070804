@@ -553,3 +553,7 @@ https://github.com/nextauthjs/next-auth/blob/main/packages/adapter-drizzle/src/l
 55. install `@auth/core`
 
 56. Update Adapter types in `auth-core.d.ts`
+
+57. Event to update emailVerified for OAuth users
+
+-- END OF PART 4 --

@@ -9,6 +9,7 @@ import { SigninSchema } from "@/validators/signin-validator";
 import { findUserByEmail } from "@/resources/user-queries";
 import db from "@/drizzle";
 import * as schema from "@/drizzle/schema";
+import { verifyEmailAction } from "./actions/verify-email-action";
 
 const nextAuth = NextAuth({
   adapter: DrizzleAdapter(db, {
@@ -32,6 +33,13 @@ const nextAuth = NextAuth({
       session.user.id = token.id;
       session.user.role = token.role;
       return session;
+    },
+  },
+  events: {
+    async linkAccount({ user, account }) {
+      if (["google", "github"].includes(account.provider)) {
+        if (user.email) await verifyEmailAction(user.email);
+      }
     },
   },
   providers: [

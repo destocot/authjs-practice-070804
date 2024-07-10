@@ -21,14 +21,13 @@ export default function Page() {
           <Li done>Auth.js Drizzle Adapter</Li>
           <Li done>Extend Session Information</Li>
           <Li done>Auth.js Extend Types</Li>
-          <Li done>Auth.js Session Callbacks</Li>
-          <Li done>Error Page</Li>
-          <Li>Auth.js Session Events</Li>
+          <Li done>Auth.js Session Events</Li>
           <Li>Update Session (Client)</Li>
+          <Li>Auth.js Session Callbacks</Li>
           <Li>allowDangerousEmailAccountLinking</Li>
+          <Li>Middleware</Li>
           <Li>User Roles</Li>
           <Li>Admin Dashboard</Li>
-          <Li>Middleware</Li>
           <Li>Email Verification</Li>
           <Li>Password Reset</Li>
         </ul>
