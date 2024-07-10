@@ -14,7 +14,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signinUser } from "@/actions/signin-action";
-import { useRouter } from "next/navigation";
 
 export const SigninForm = () => {
   const form = useForm<SigninInput>({
@@ -24,7 +23,6 @@ export const SigninForm = () => {
 
   const { handleSubmit, control, formState, setError } = form;
 
-  const router = useRouter();
   const submit = async (values: SigninInput) => {
     const res = await signinUser(values);
 

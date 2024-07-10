@@ -558,4 +558,74 @@ https://github.com/nextauthjs/next-auth/blob/main/packages/adapter-drizzle/src/l
 
 -- END OF PART 4 --
 
-58.
+58.Now we update session client side
+
+59. Create a form to update the `name`
+
+59.1 shadcn dialog
+
+```bash
+pnpm dlx shadcn-ui@latest add dialog
+```
+
+60. Create update user schema
+
+61. Create update user server action
+
+62. Update session
+
+63. Show user in neon.tech
+
+63.1 but we need to update the actual session
+
+```tsx
+const { data: session, update } = useSession();
+
+if (session?.user) {
+  await update({
+    ...session,
+    user: {
+      ...session.user,
+      name: updatedUser.name,
+    },
+  });
+}
+```
+
+63.2 jwt callback
+
+```ts
+jwt({ token, user, trigger, session }) {
+  if (trigger === "update") {
+    return { ...token, ...session.user };
+  }
+
+  if (user?.id) {
+    token.id = user.id;
+    token.role = user.role;
+  }
+  return token;
+},
+```
+
+64. Let's talk callbacks
+
+`signIn` callback
+
+we can verify out user's via our providers
+
+65. Let's talk `allowDangerousEmailAccountLinking`
+
+66.1 show my logic with credentails vs the oauths
+
+66.2 deal with showing errors in case of not allowing it
+
+** this is a decent approach **
+
+66.3 Now discuss allowing it
+
+67. now allow it
+
+67.1 preventing oauth from going into credentials (easy via `!user.password`)
+
+67.2 figure out how to prevent creds to go into oauth

@@ -22,8 +22,8 @@ export default function Page() {
           <Li done>Extend Session Information</Li>
           <Li done>Auth.js Extend Types</Li>
           <Li done>Auth.js Session Events</Li>
-          <Li>Update Session (Client)</Li>
-          <Li>Auth.js Session Callbacks</Li>
+          <Li done>Update Session (Client)</Li>
+          <Li done>Auth.js Session Callbacks</Li>
           <Li>allowDangerousEmailAccountLinking</Li>
           <Li>Middleware</Li>
           <Li>User Roles</Li>

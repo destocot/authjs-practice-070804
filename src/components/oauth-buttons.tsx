@@ -8,14 +8,37 @@ import {
 } from "@icons-pack/react-simple-icons";
 import { Button } from "@/components/ui/button";
 import { oauthSigninUser } from "@/actions/oauth-signin-action";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type OAuthButtonsProps = { page: "signup" | "signin" };
 
 export const OAuthButtons = ({ page }: OAuthButtonsProps) => {
+  const [errMssg, setErrMssg] = useState("");
+
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+
+  useEffect(() => {
+    if (!error) return;
+
+    if (error === "OAuthAccountNotLinked") {
+      setErrMssg("This account is already in use. Please sign in.");
+    } else {
+      setErrMssg("An error occurred. Please try again.");
+    }
+  }, [error]);
+
   const text = page === "signup" ? "Sign up" : "Sign in";
 
   const onClick = async (provider: "google" | "github") => {
-    await oauthSigninUser(provider);
+    setErrMssg("");
+
+    try {
+      await oauthSigninUser(provider);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -37,6 +60,10 @@ export const OAuthButtons = ({ page }: OAuthButtonsProps) => {
         <SiGithub color={SiGithubHex} className="mr-2" />
         {text} with Github
       </Button>
+
+      {errMssg && (
+        <p className="mt-2 text-sm font-medium text-destructive">{errMssg}</p>
+      )}
     </div>
   );
 };
