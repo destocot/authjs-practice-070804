@@ -628,4 +628,6 @@ we can verify out user's via our providers
 
 67.1 preventing oauth from going into credentials (easy via `!user.password`)
 
-67.2 figure out how to prevent creds to go into oauth
+68. Custom errors
+
+69. figure out how to prevent credentials to go into oauth

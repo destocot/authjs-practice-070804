@@ -9,7 +9,8 @@ import { SigninSchema } from "@/validators/signin-validator";
 import { findUserByEmail } from "@/resources/user-queries";
 import db from "@/drizzle";
 import * as schema from "@/drizzle/schema";
-import { verifyEmailAction } from "./actions/verify-email-action";
+import { verifyEmailAction } from "@/actions/verify-email-action";
+import { OAuthAccountAlreadyLinkedError } from "@/lib/custom-errors";
 
 const nextAuth = NextAuth({
   adapter: DrizzleAdapter(db, {
@@ -48,7 +49,7 @@ const nextAuth = NextAuth({
       }
 
       if (account?.provider === "credentials") {
-        console.log("credentia.user.emailVerified", !!user.emailVerified);
+        console.log("credentials.user.emailVerified", !!user.emailVerified);
 
         if (user.emailVerified) {
           // return true;
@@ -78,7 +79,7 @@ const nextAuth = NextAuth({
           const { email, password } = parsedCredentials.output;
 
           const user = await findUserByEmail(email);
-          if (!user?.password) return null;
+          if (!user?.password) throw new OAuthAccountAlreadyLinkedError();
 
           const passwordsMatch = await argon2.verify(user.password, password);
           if (passwordsMatch) return user;
@@ -90,10 +91,12 @@ const nextAuth = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
     Github({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
 });

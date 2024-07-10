@@ -25,6 +25,7 @@ export default function Page() {
           <Li done>Update Session (Client)</Li>
           <Li done>Auth.js Session Callbacks</Li>
           <Li>allowDangerousEmailAccountLinking</Li>
+          <Li>Custom errors</Li>
           <Li>Middleware</Li>
           <Li>User Roles</Li>
           <Li>Admin Dashboard</Li>
