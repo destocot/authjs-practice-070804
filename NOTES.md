@@ -616,7 +616,7 @@ we can verify out user's via our providers
 
 65. Let's talk `allowDangerousEmailAccountLinking`
 
-66.1 show my logic with credentails vs the oauths
+66.1 show my logic with credentials vs the oauths
 
 66.2 deal with showing errors in case of not allowing it
 

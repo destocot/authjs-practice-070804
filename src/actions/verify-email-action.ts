@@ -18,7 +18,7 @@ export async function verifyEmailAction(
       ),
     );
 
-  if (existingUser.id) {
+  if (existingUser?.id) {
     await db
       .update(users)
       .set({ emailVerified: new Date() })

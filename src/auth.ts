@@ -11,6 +11,7 @@ import db from "@/drizzle";
 import * as schema from "@/drizzle/schema";
 import { verifyEmailAction } from "@/actions/verify-email-action";
 import { OAuthAccountAlreadyLinkedError } from "@/lib/custom-errors";
+import { checkUserCredentials } from "@/actions/check-linked-accounts";
 
 const nextAuth = NextAuth({
   adapter: DrizzleAdapter(db, {
@@ -49,8 +50,6 @@ const nextAuth = NextAuth({
       }
 
       if (account?.provider === "credentials") {
-        console.log("credentials.user.emailVerified", !!user.emailVerified);
-
         if (user.emailVerified) {
           // return true;
         }
@@ -62,7 +61,14 @@ const nextAuth = NextAuth({
     },
   },
   events: {
+    async createUser({ user }) {
+      console.log("events.createUser");
+      if (user.email) {
+        await checkUserCredentials(user.email);
+      }
+    },
     async linkAccount({ user, account }) {
+      console.log("events.linkAccount");
       if (["google", "github"].includes(account.provider)) {
         if (user.email) {
           await verifyEmailAction(user.email);
@@ -82,7 +88,10 @@ const nextAuth = NextAuth({
           if (!user?.password) throw new OAuthAccountAlreadyLinkedError();
 
           const passwordsMatch = await argon2.verify(user.password, password);
-          if (passwordsMatch) return user;
+          if (passwordsMatch) {
+            const { password, ...userWithoutPassword } = user;
+            return userWithoutPassword;
+          }
         }
 
         return null;
@@ -91,12 +100,10 @@ const nextAuth = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      allowDangerousEmailAccountLinking: true,
     }),
     Github({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      allowDangerousEmailAccountLinking: true,
     }),
   ],
 });

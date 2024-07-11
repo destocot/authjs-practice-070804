@@ -29,10 +29,13 @@ import type { User } from "next-auth";
 import { updateUserInfo } from "@/actions/update-user-info-action";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 type UpdateInfoFormProps = { user: User };
 
 export const UserInfoForm = ({ user }: UpdateInfoFormProps) => {
+  const [success, setSuccess] = useState("");
+
   const { data: session, update } = useSession();
   const router = useRouter();
 
@@ -46,6 +49,8 @@ export const UserInfoForm = ({ user }: UpdateInfoFormProps) => {
   const { handleSubmit, control, formState, setError } = form;
 
   const submit = async (values: UpdateUserInfoInput) => {
+    setSuccess("");
+
     const res = await updateUserInfo(values);
 
     if (res.success) {
@@ -62,6 +67,7 @@ export const UserInfoForm = ({ user }: UpdateInfoFormProps) => {
       }
 
       router.refresh();
+      setSuccess("User information updated successfully.");
     } else {
       switch (res.statusCode) {
         case 400:
@@ -118,6 +124,9 @@ export const UserInfoForm = ({ user }: UpdateInfoFormProps) => {
                   </FormItem>
                 )}
               />
+              {success && (
+                <p className="text-sm font-medium text-green-600">{success}</p>
+              )}
 
               <FormField name="id" render={() => <FormMessage />} />
 

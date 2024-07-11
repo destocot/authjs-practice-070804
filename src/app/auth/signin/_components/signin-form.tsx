@@ -18,7 +18,7 @@ import { signinUser } from "@/actions/signin-action";
 export const SigninForm = () => {
   const form = useForm<SigninInput>({
     resolver: valibotResolver(SigninSchema),
-    defaultValues: { email: "bartender@example.com", password: "glassofgod" },
+    defaultValues: { email: "khurramcali@gmail.com", password: "123456" },
   });
 
   const { handleSubmit, control, formState, setError } = form;
