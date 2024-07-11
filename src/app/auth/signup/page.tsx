@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { SignupForm } from "./_components/signup-form";
 import Link from "next/link";
-import { OAuthButtons } from "@/components/oauth-buttons";
+import { OAuthButtons, OAuthButtonsSkeleton } from "@/components/oauth-buttons";
+import { Suspense } from "react";
 
 export default function Page() {
   return (
@@ -15,7 +16,9 @@ export default function Page() {
 
         {/* Oauth Links */}
         <div className="my-2 h-1 bg-muted" />
-        <OAuthButtons page="signup" />
+        <Suspense fallback={<OAuthButtonsSkeleton />}>
+          <OAuthButtons page="signup" />
+        </Suspense>
 
         {/* Go to Signin Link  */}
         <div className="my-2 h-1 bg-muted" />

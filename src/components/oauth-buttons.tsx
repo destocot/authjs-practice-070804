@@ -67,3 +67,19 @@ export const OAuthButtons = ({ page }: OAuthButtonsProps) => {
     </div>
   );
 };
+
+export const OAuthButtonsSkeleton = () => {
+  return (
+    <div className="max-w-[400px]">
+      <Button variant="secondary" className="w-full" disabled>
+        <SiGoogle color={SiGoogleHex} className="mr-2" />
+        Sign up with Google
+      </Button>
+
+      <Button variant="secondary" className="mt-2 w-full" disabled>
+        <SiGithub color={SiGithubHex} className="mr-2" />
+        Sign up with Github
+      </Button>
+    </div>
+  );
+};

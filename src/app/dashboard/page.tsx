@@ -4,9 +4,12 @@ import Link from "next/link";
 import type { User } from "next-auth";
 import { SignoutButton } from "@/components/signout-button";
 import { UserInfoForm } from "./_components/user-info-form";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await auth();
+
+  // if (!session) redirect("/auth/signin");
 
   return (
     <main className="mt-4">

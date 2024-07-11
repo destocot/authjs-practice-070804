@@ -554,6 +554,30 @@ https://github.com/nextauthjs/next-auth/blob/main/packages/adapter-drizzle/src/l
 
 56. Update Adapter types in `auth-core.d.ts`
 
+56.1. **BONUS** Work with user from database
+
+- Talk about minimal information in jwt
+- Focus on just using the session's user for this tutorial
+
+```ts
+const getUserFromAuthId = async () => {
+  const session = await auth();
+
+  if (!session?.user?.id) throw new Error("User not found");
+
+  const id = session.user.id;
+
+  const { password, ...rest } = getTableColumns(users);
+
+  const [user] = await db
+    .select({ ...rest })
+    .from(users)
+    .where(eq(users.id, id));
+
+  return user;
+};
+```
+
 57. Event to update emailVerified for OAuth users
 
 -- END OF PART 4 --
@@ -571,6 +595,11 @@ pnpm dlx shadcn-ui@latest add dialog
 60. Create update user schema
 
 61. Create update user server action
+
+```
+now when we do things requiring auth we should
+validate the session in the respective actions
+```
 
 62. Update session
 
@@ -614,20 +643,68 @@ jwt({ token, user, trigger, session }) {
 
 we can verify out user's via our providers
 
+65. Let's talk about account linking
+
+65.1 Made an account with oauth
+
+- if i made an account with oauth
+- and i am **LOGGED OUT**
+- cannot link other oauth (because `allowDangerousEmailAccountLinking = false`)
+
+  65.2. Custom Error
+
+- i can't login with credentials (via my authorize function)
+
+  65.3. Made an account with credentials
+
+- if i made an account with credentials
+- and i am **LOGGED OUT**
+- I cannot link that same `email` (because `allowDangerousEmailAccountLinking = false`)
+
 65. Let's talk `allowDangerousEmailAccountLinking`
 
-66.1 show my logic with credentials vs the oauths
+66.1 if we turn it on when **LOGGED OUT**, we can link
 
-66.2 deal with showing errors in case of not allowing it
+acc created with credentials -> to google or github with same email
+acc created with google -> github wth same email (not credentials)
+acc created with github -> google with same email (not credentials)
 
-** this is a decent approach **
+66.2 Talk about Oauth Specificaiton we can Link **MANY** accounts when logged in
 
-66.3 Now discuss allowing it
+67. Middleware (Build Up)
 
-67. now allow it
+Currently we are just showing a conditional protection on our dashboard page
 
-67.1 preventing oauth from going into credentials (easy via `!user.password`)
+This was just a simple show case
 
-68. Custom errors
+67.1 Maybe you want to not have the user even go to the page.
 
-69. figure out how to prevent credentials to go into oauth
+let's implement this directly
+
+```tsx
+// /dashboard/page.tsx
+if (!session) redirect("/auth/signin");
+```
+
+```tsx
+// /auth/layout.tsximport { auth } from "@/auth";
+export default async function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await auth();
+
+  if (session) redirect("/dashboard");
+
+  return <>{children}</>;
+}
+```
+
+> Note this will cause both sign{in|up} pages to be dynamic
+
+67 Middleware and the authorized callback
+
+67.1 the problem with crypto module
+
+67.2 the `auth.config.ts`

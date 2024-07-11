@@ -7,8 +7,6 @@ type SignupUserRes =
   | { success: true }
   | { success: false; error: string; statusCode: 401 | 500 };
 
-class OauthAccountLinkedError extends AuthError {}
-
 export async function signinUser(values: unknown): Promise<SignupUserRes> {
   try {
     if (typeof values !== "object") throw new Error();
