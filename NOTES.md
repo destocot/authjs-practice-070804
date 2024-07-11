@@ -34,7 +34,7 @@ export default function Page() {
     <main className="mt-4">
       <div className="container">
         <h1 className="text-3xl font-bold tracking-tight">Sign Up</h1>
-        <div className="my-4 h-1 bg-muted" />
+        <div className="bg-muted my-4 h-1" />
 
         {/* Signup Form */}
 
@@ -710,3 +710,18 @@ export default async function AuthLayout({
 67.2 the `auth.config.ts`
 
 -- END OF PART 5 --
+
+68. User Roles
+
+By default our database will create all users as a user.
+
+Let's write some logic to show if you are a user or an admin.
+
+69. The `process.env` method
+
+69.1 have to add to `jwt callback` and `create user` event
+requrie re-log or add to `jwt callback`
+
+69.2 add to signup action
+
+70. the ADMIN dashboard (dashboard method)

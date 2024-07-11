@@ -1,12 +1,11 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-
 import argon2 from "argon2";
 import * as v from "valibot";
 import { SigninSchema } from "@/validators/signin-validator";
-import { findUserByEmail } from "@/resources/user-queries";
 import { OAuthAccountAlreadyLinkedError } from "@/lib/custom-errors";
 import { authConfig } from "@/auth.config";
+import { findUserByEmail } from "@/resources/user-queries/find-user-by-email";
 
 const { providers: authConfigProviders, ...authConfigRest } = authConfig;
 

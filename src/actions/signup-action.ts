@@ -39,6 +39,8 @@ export async function signupUser(values: unknown): Promise<SignupUserRes> {
 
   try {
     const hashedPassword = await argon2.hash(password);
+    const adminEmails = (process.env.ADMIN_EMAIL_ADDRESSES || "").split(",");
+    const isAdmin = adminEmails.includes(email);
 
     const [newUser] = await db
       .insert(users)
@@ -46,6 +48,7 @@ export async function signupUser(values: unknown): Promise<SignupUserRes> {
         name,
         email,
         password: hashedPassword,
+        role: isAdmin ? "admin" : "user",
       })
       .returning({ id: users.id });
 

@@ -27,7 +27,7 @@ export default function Page() {
           <Li done>Custom errors</Li>
           <Li done>allowDangerousEmailAccountLinking</Li>
           <Li done>Middleware</Li>
-          <Li>User Roles</Li>
+          <Li done>User Roles</Li>
           <Li>Admin Dashboard</Li>
           <Li>Email Verification</Li>
           <Li>Password Reset</Li>

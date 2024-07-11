@@ -2,10 +2,10 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import type { NextAuthConfig } from "next-auth";
 import db from "@/drizzle";
 import * as schema from "@/drizzle/schema";
-import { checkUserCredentials } from "@/actions/check-linked-accounts";
 import { verifyEmailAction } from "@/actions/verify-email-action";
 import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
+import { changeUserRole } from "@/actions/change-user-role";
 
 export const authConfig = {
   adapter: DrizzleAdapter(db, {
@@ -44,7 +44,11 @@ export const authConfig = {
       }
 
       if (user?.id) token.id = user.id;
+
       if (user?.role) token.role = user.role;
+
+      const adminEmails = (process.env.ADMIN_EMAIL_ADDRESSES || "").split(",");
+      if (user?.email && adminEmails.includes(user.email)) token.role = "admin";
 
       return token;
     },
@@ -75,9 +79,11 @@ export const authConfig = {
   },
   events: {
     async createUser({ user }) {
-      console.log("events.createUser");
-      if (user.email) {
-        await checkUserCredentials(user.email);
+      if (!user.email) return;
+
+      const adminEmails = (process.env.ADMIN_EMAIL_ADDRESSES || "").split(",");
+      if (adminEmails.includes(user.email)) {
+        await changeUserRole(user.email, "admin");
       }
     },
     async linkAccount({ user, account }) {

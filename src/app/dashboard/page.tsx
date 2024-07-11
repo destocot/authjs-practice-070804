@@ -5,18 +5,29 @@ import type { User } from "next-auth";
 import { SignoutButton } from "@/components/signout-button";
 import { UserInfoForm } from "./_components/user-info-form";
 import { redirect } from "next/navigation";
+import { LockIcon } from "lucide-react";
 
 export default async function Page() {
   const session = await auth();
+  const isAdmin = session?.user?.role === "admin";
 
   // if (!session) redirect("/auth/signin");
 
   return (
     <main className="mt-4">
       <div className="container">
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <div className="my-2 h-1 bg-muted" />
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          {isAdmin && (
+            <Button size="lg" asChild>
+              <Link href="/dashboard/admin-panel">
+                <LockIcon className="mr-2" /> Admin Panel
+              </Link>
+            </Button>
+          )}
+        </div>
 
+        <div className="my-2 h-1 bg-muted" />
         {!!session?.user ? <SignedIn user={session.user} /> : <SignedOut />}
       </div>
     </main>
