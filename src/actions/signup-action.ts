@@ -5,7 +5,7 @@ import * as v from "valibot";
 import argon2 from "argon2";
 import db from "@/drizzle";
 import { users } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { eq, is } from "drizzle-orm";
 
 type SignupUserRes =
   | { success: true }
@@ -41,6 +41,8 @@ export async function signupUser(values: unknown): Promise<SignupUserRes> {
     const hashedPassword = await argon2.hash(password);
     const adminEmails = (process.env.ADMIN_EMAIL_ADDRESSES || "").split(",");
     const isAdmin = adminEmails.includes(email);
+
+    console.log({ adminEmails, isAdmin });
 
     const [newUser] = await db
       .insert(users)

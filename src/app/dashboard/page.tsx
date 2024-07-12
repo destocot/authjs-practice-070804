@@ -42,7 +42,7 @@ const SignedIn = ({ user }: { user: User }) => {
         <UserInfoForm user={user} />
       </div>
 
-      <table className="mt-4 table-auto divide-y">
+      <table className="mt-4 w-full table-auto divide-y">
         <thead>
           <tr className="divide-x">
             <th className="bg-primary-foreground px-6 py-3 text-start">id</th>

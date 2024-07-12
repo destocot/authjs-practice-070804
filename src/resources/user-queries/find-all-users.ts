@@ -3,7 +3,7 @@ import "server-only";
 import { auth } from "@/auth";
 import db from "@/drizzle";
 import { users } from "@/drizzle/schema";
-import { getTableColumns } from "drizzle-orm";
+import { desc, getTableColumns } from "drizzle-orm";
 
 export const findAllUsers = async () => {
   const session = await auth();
@@ -12,7 +12,10 @@ export const findAllUsers = async () => {
 
   const { password, ...rest } = getTableColumns(users);
 
-  const allUsers = await db.select({ ...rest }).from(users);
+  const allUsers = await db
+    .select({ ...rest })
+    .from(users)
+    .orderBy(desc(users.role));
 
   return allUsers;
 };

@@ -8,9 +8,9 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 // admin-panel action
-export async function toggleEmailVerifiedAction(
+export async function changeUserRoleAction(
   email: (typeof users.$inferSelect)["email"],
-  isCurrentlyVerified: boolean,
+  newRole: (typeof users.$inferSelect)["role"],
 ) {
   const session = await auth();
 
@@ -22,18 +22,9 @@ export async function toggleEmailVerifiedAction(
 
   if (!existingUser.id) return;
   if (existingUser.role === "admin") return;
+  if (existingUser.role === newRole) return;
 
-  if (isCurrentlyVerified) {
-    await db
-      .update(users)
-      .set({ emailVerified: null })
-      .where(eq(users.id, existingUser.id));
-  } else {
-    await db
-      .update(users)
-      .set({ emailVerified: new Date() })
-      .where(eq(users.id, existingUser.id));
-  }
+  await db.update(users).set({ role: newRole }).where(eq(users.email, email));
 
   revalidatePath("/dashboard/admin-panel");
 }
