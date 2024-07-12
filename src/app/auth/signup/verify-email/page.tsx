@@ -1,3 +1,4 @@
+import { verifyCredentialsEmailAction } from "@/actions/verify-credentials-email-action";
 import { Button } from "@/components/ui/button";
 import { findVerificationTokenByToken } from "@/resources/verification-token-queries/find-verification-token-by-token";
 import Link from "next/link";
@@ -9,33 +10,15 @@ export default async function Page({ searchParams }: PageProps) {
     searchParams.token,
   );
 
-  console.log(verificationToken.expires);
+  if (!verificationToken?.expires) return <TokenIsInvalidState />;
 
   const isExpired = new Date(verificationToken.expires) < new Date();
-  console.log(isExpired);
 
-  if (isExpired) {
-    return (
-      <main className="mt-4">
-        <div className="container">
-          <h1 className="text-3xl font-bold tracking-tight">Verify Email</h1>
+  if (isExpired) return <TokenIsInvalidState />;
 
-          <div className="my-2 h-1 bg-muted" />
-          <div className="rounded bg-red-100 p-4">
-            <p>Token is expired.</p>
+  const res = await verifyCredentialsEmailAction(searchParams.token);
 
-            <span>
-              Click{" "}
-              <Button variant="link" size="sm" className="px-0" asChild>
-                <Link href="/auth/signup">here</Link>
-              </Button>{" "}
-              to sign up again.
-            </span>
-          </div>
-        </div>
-      </main>
-    );
-  }
+  if (!res.success) return <TokenIsInvalidState />;
 
   return (
     <main className="mt-4">
@@ -49,12 +32,35 @@ export default async function Page({ searchParams }: PageProps) {
           <span>
             Click{" "}
             <Button variant="link" size="sm" className="px-0" asChild>
-              <Link href="/auth/login">here</Link>
+              <Link href="/auth/signin">here</Link>
             </Button>{" "}
-            to login.
+            to sign in.
           </span>
         </div>
       </div>
     </main>
   );
 }
+
+const TokenIsInvalidState = () => {
+  return (
+    <main className="mt-4">
+      <div className="container">
+        <h1 className="text-3xl font-bold tracking-tight">Verify Email</h1>
+
+        <div className="my-2 h-1 bg-muted" />
+        <div className="rounded bg-red-100 p-4">
+          <p>Token is invalid.</p>
+
+          <span>
+            Click{" "}
+            <Button variant="link" size="sm" className="px-0" asChild>
+              <Link href="/auth/signup">here</Link>
+            </Button>{" "}
+            to sign up again.
+          </span>
+        </div>
+      </div>
+    </main>
+  );
+};

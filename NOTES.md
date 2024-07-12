@@ -776,3 +776,13 @@ NODEMAILER_GOOGLE_REFRESH_TOKEN="FILL_ME"
 75. Create transport
 
 76. Create Verification Token Action
+
+76.1 Decision 1 - do not delete any old verification tokens (you can if you want)
+
+76.2 Two Roads
+
+76.21 - Token is good, then we verify.
+
+76.22 - Token is bad, then we give no token link
+
+76.23 - If email is taken, then send a new link

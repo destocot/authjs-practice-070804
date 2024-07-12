@@ -7,10 +7,12 @@ import { eq } from "drizzle-orm";
 export const findVerificationTokenByToken = async (
   token: (typeof verificationTokens.$inferSelect)["token"],
 ) => {
+  if (!token) return null;
+
   const [verificationToken] = await db
     .select()
     .from(verificationTokens)
     .where(eq(verificationTokens.token, token));
 
-  return verificationToken;
+  return verificationToken ?? null;
 };

@@ -26,13 +26,40 @@ export async function signupUser(values: unknown): Promise<SignupUserRes> {
 
   try {
     const [existingUser] = await db
-      .select({ id: users.id })
+      .select({
+        id: users.id,
+        email: users.email,
+        emailVerified: users.emailVerified,
+      })
       .from(users)
       .where(eq(users.email, email))
       .limit(1);
 
     if (existingUser?.id) {
-      return { success: false, error: "Email already exists", statusCode: 409 };
+      if (!existingUser.emailVerified) {
+        // Create a verification token
+        const verificationToken = await createVerificationTokenAction(
+          existingUser.email,
+        );
+
+        // Send the verification email
+        await sendSignupUserEmail({
+          email: existingUser.email,
+          token: verificationToken.token,
+        });
+
+        return {
+          success: false,
+          error: "User exists but not verified. Verification link resent",
+          statusCode: 409,
+        };
+      } else {
+        return {
+          success: false,
+          error: "Email already exists",
+          statusCode: 409,
+        };
+      }
     }
   } catch (err) {
     console.error(err);
