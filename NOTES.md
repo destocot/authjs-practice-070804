@@ -34,7 +34,7 @@ export default function Page() {
     <main className="mt-4">
       <div className="container">
         <h1 className="text-3xl font-bold tracking-tight">Sign Up</h1>
-        <div className="my-4 h-1 bg-muted" />
+        <div className="bg-muted my-4 h-1" />
 
         {/* Signup Form */}
 
@@ -736,4 +736,43 @@ requrie re-log or add to `jwt callback`
 
 70.5 decision - dont allow change for admins
 
-71. Email Time
+71. Email Time - nodemailer
+
+```bash
+pnpm add nodemailer
+pnpm add -D @types/nodemailer
+```
+
+72. Google Cloud Console
+
+72.1 - Add an email you want to send mail from to test users
+
+72.2 **.env**
+
+```
+NODEMAILER_GOOGLE_SMTP_USER="FILL_ME"
+```
+
+73. Oauth Playground
+
+https://developers.google.com/oauthplayground/
+
+- Gear -> Use your own OAuth credentials
+- use GOOGLE_CLIENT_ID
+- use GOOGLE_CLIENT_SECRET
+
+74. On the left, under the Select & authorize APIs section, find Gmail API v1 and select https://mail.google.com/. Alternately, you can also type https://mail.google.com/ into the Input your own scopes field.
+
+After being redirected back to the OAuth 2.0 Playground,
+click the Exchange authorization code for tokens button under the Exchange authorization code for tokens section.
+
+Once the refresh and access token is generated, copy the refresh token and save it for later.
+
+```
+NODEMAILER_GOOGLE_ACCESS_TOKEN="FILL_ME"
+NODEMAILER_GOOGLE_REFRESH_TOKEN="FILL_ME"
+```
+
+75. Create transport
+
+76. Create Verification Token Action

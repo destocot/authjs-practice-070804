@@ -23,8 +23,8 @@ export const SignupForm = () => {
   const form = useForm<SignupInput>({
     resolver: valibotResolver(SignupSchema),
     defaultValues: {
-      name: "",
-      email: "",
+      name: "megaman25",
+      email: "destocotz@yahoo.com",
       password: "123456",
       confirmPassword: "123456",
     },

@@ -5,7 +5,9 @@ import * as v from "valibot";
 import argon2 from "argon2";
 import db from "@/drizzle";
 import { users } from "@/drizzle/schema";
-import { eq, is } from "drizzle-orm";
+import { eq } from "drizzle-orm";
+import { createVerificationTokenAction } from "@/actions/create-verification-token";
+import { sendSignupUserEmail } from "@/actions/send-signup-user-email";
 
 type SignupUserRes =
   | { success: true }
@@ -50,9 +52,18 @@ export async function signupUser(values: unknown): Promise<SignupUserRes> {
         password: hashedPassword,
         role: isAdmin ? "admin" : "user",
       })
-      .returning({ id: users.id });
+      .returning({ id: users.id, email: users.email });
 
-    console.log({ insertedId: newUser.id });
+    // Create a verification token
+    const verificationToken = await createVerificationTokenAction(
+      newUser.email,
+    );
+
+    // Send the verification email
+    await sendSignupUserEmail({
+      email: newUser.email,
+      token: verificationToken.token,
+    });
 
     return { success: true };
   } catch (err) {

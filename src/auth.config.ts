@@ -2,10 +2,10 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import type { NextAuthConfig } from "next-auth";
 import db from "@/drizzle";
 import * as schema from "@/drizzle/schema";
-import { verifyEmailAction } from "@/actions/verify-email-action";
 import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
 import { changeUserRole } from "@/actions/change-user-role";
+import { verifyOAuthEmailAction } from "@/actions/verify-oauth-email-action";
 
 export const authConfig = {
   adapter: DrizzleAdapter(db, {
@@ -90,7 +90,7 @@ export const authConfig = {
       console.log("events.linkAccount");
       if (["google", "github"].includes(account.provider)) {
         if (user.email) {
-          await verifyEmailAction(user.email);
+          await verifyOAuthEmailAction(user.email);
         }
       }
     },

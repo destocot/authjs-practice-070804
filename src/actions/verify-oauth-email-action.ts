@@ -4,7 +4,7 @@ import db from "@/drizzle";
 import { users } from "@/drizzle/schema";
 import { and, eq, isNull } from "drizzle-orm";
 
-export async function verifyEmailAction(
+export async function verifyOAuthEmailAction(
   email: (typeof users.$inferSelect)["email"],
 ) {
   const [existingUser] = await db
