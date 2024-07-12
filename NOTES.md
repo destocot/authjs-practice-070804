@@ -34,7 +34,7 @@ export default function Page() {
     <main className="mt-4">
       <div className="container">
         <h1 className="text-3xl font-bold tracking-tight">Sign Up</h1>
-        <div className="bg-muted my-4 h-1" />
+        <div className="my-4 h-1 bg-muted" />
 
         {/* Signup Form */}
 
@@ -725,3 +725,15 @@ requrie re-log or add to `jwt callback`
 69.2 add to signup action
 
 70. the ADMIN dashboard (dashboard method)
+
+70.1 - email verified checkbox input
+
+70.2 - email verified action
+
+70.3 - role change select
+
+70.4 - role change action
+
+70.5 decision - dont allow change for admins
+
+71. Email Time

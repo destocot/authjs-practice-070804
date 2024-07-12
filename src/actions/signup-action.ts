@@ -42,8 +42,6 @@ export async function signupUser(values: unknown): Promise<SignupUserRes> {
     const adminEmails = (process.env.ADMIN_EMAIL_ADDRESSES || "").split(",");
     const isAdmin = adminEmails.includes(email);
 
-    console.log({ adminEmails, isAdmin });
-
     const [newUser] = await db
       .insert(users)
       .values({
