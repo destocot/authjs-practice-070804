@@ -1,0 +1,1 @@
+export const VERIFICATION_TOKEN_EXPIRATION_MINUTES = 15 as const;

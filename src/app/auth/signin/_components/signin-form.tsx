@@ -13,12 +13,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { signinUser } from "@/actions/signin-action";
+import { signinUser } from "@/actions/auth/signin-action";
 
 export const SigninForm = () => {
   const form = useForm<SigninInput>({
     resolver: valibotResolver(SigninSchema),
-    defaultValues: { email: "khurramcali@gmail.com", password: "123456" },
+    defaultValues: { email: "destocotz@yahoo.com", password: "123456" },
   });
 
   const { handleSubmit, control, formState, setError } = form;

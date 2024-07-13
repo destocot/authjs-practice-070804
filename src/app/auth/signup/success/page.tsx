@@ -8,14 +8,16 @@ export default function Page() {
         <h1 className="text-3xl font-bold tracking-tight">Sign Up</h1>
 
         <div className="my-2 h-1 bg-muted" />
-        <p>User successfully created!</p>
+        <p>Verification email has been sent!</p>
+        <p>Please check your email to verify your account.</p>
 
+        <div className="my-2 h-1 bg-muted" />
         <span>
           Click{" "}
           <Button variant="link" size="sm" className="px-0" asChild>
-            <Link href="/auth/signin">here</Link>
+            <Link href="/">here</Link>
           </Button>{" "}
-          to sign in.
+          to go back to the home page.
         </span>
       </div>
     </main>

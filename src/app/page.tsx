@@ -29,7 +29,7 @@ export default function Page() {
           <Li done>Middleware</Li>
           <Li done>User Roles</Li>
           <Li done>Admin Dashboard</Li>
-          <Li>Email Verification</Li>
+          <Li done>Email Verification</Li>
           <Li>Password Reset</Li>
         </ul>
 

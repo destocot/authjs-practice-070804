@@ -6,8 +6,8 @@ import argon2 from "argon2";
 import db from "@/drizzle";
 import { users } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
-import { createVerificationTokenAction } from "@/actions/create-verification-token";
-import { sendSignupUserEmail } from "@/actions/send-signup-user-email";
+import { createVerificationTokenAction } from "@/actions/auth/create-verification-token";
+import { sendSignupUserEmail } from "@/actions/mail/send-signup-user-email";
 
 type SignupUserRes =
   | { success: true }

@@ -3,6 +3,7 @@ import { SigninForm } from "./_components/signin-form";
 import Link from "next/link";
 import { OAuthButtons, OAuthButtonsSkeleton } from "@/components/oauth-buttons";
 import { Suspense } from "react";
+import { ForgotPasswordForm } from "./_components/forgot-password-form";
 
 export default function Page() {
   return (
@@ -29,6 +30,9 @@ export default function Page() {
           </Button>{" "}
           to sign up.
         </p>
+
+        {/* Forgot Password Dialog */}
+        <ForgotPasswordForm />
       </div>
     </main>
   );

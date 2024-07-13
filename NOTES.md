@@ -34,7 +34,7 @@ export default function Page() {
     <main className="mt-4">
       <div className="container">
         <h1 className="text-3xl font-bold tracking-tight">Sign Up</h1>
-        <div className="bg-muted my-4 h-1" />
+        <div className="my-4 h-1 bg-muted" />
 
         {/* Signup Form */}
 
@@ -774,15 +774,34 @@ NODEMAILER_GOOGLE_REFRESH_TOKEN="FILL_ME"
 ```
 
 75. Create transport
+    Lets make our verification timeout an CONSTANT variable
 
 76. Create Verification Token Action
 
 76.1 Decision 1 - do not delete any old verification tokens (you can if you want)
 
+76.11 You can delete after its verified
+76.12 You can delete after a new one its created
+76.13 You can create a cron job or something to delete every X days or something
+76.14 or you can just keep it for analytics
+
 76.2 Two Roads
 
 76.21 - Token is good, then we verify.
 
-76.22 - Token is bad, then we give no token link
+76.22 - Token is bad, then we (return to signup page to request a new token)
 
 76.23 - If email is taken, then send a new link
+
+**Simple** We make it simple and just send the user back to resign up if their verification code is forgotten or expired
+
+77. Back to Auth.js
+
+Add callback to deny email verified
+add access denied case to sign in action
+
+WARNING!!! cache issues when testing stuff out, delete `.next` if anything
+
+78. password reset
+
+78.1 create UI

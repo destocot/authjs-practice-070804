@@ -7,7 +7,7 @@ import {
   SiGithubHex,
 } from "@icons-pack/react-simple-icons";
 import { Button } from "@/components/ui/button";
-import { oauthSigninUser } from "@/actions/oauth-signin-action";
+import { oauthSigninUser } from "@/actions/auth/oauth-signin-action";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 

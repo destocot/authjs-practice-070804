@@ -1,12 +1,14 @@
 "use server";
 import db from "@/drizzle";
 import { verificationTokens } from "@/drizzle/schema";
-import { addMinutesFromNow } from "@/lib/utils";
+import { VERIFICATION_TOKEN_EXPIRATION_MINUTES } from "@/lib/constants";
 
 export async function createVerificationTokenAction(
   identifier: (typeof verificationTokens.$inferSelect)["identifier"],
 ) {
-  const expires = addMinutesFromNow(2);
+  const expires = new Date(
+    Date.now() + VERIFICATION_TOKEN_EXPIRATION_MINUTES * 60 * 1000,
+  );
 
   const token = Math.random().toString(36).substring(2);
 

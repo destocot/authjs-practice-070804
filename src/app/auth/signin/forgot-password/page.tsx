@@ -16,14 +16,14 @@ export default async function Page({ searchParams }: PageProps) {
 
   if (isExpired) return <TokenIsInvalidState />;
 
-  const res = await verifyCredentialsEmailAction(searchParams.token);
+  // const res = await verifyCredentialsEmailAction(searchParams.token);
 
-  if (!res.success) return <TokenIsInvalidState />;
+  // if (!res.success) return <TokenIsInvalidState />;
 
   return (
     <main className="mt-4">
       <div className="container">
-        <h1 className="text-3xl font-bold tracking-tight">Verify Email</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Forgot Password?</h1>
 
         <div className="my-2 h-1 bg-muted" />
         <div className="rounded bg-green-100 p-4">
@@ -46,7 +46,7 @@ const TokenIsInvalidState = () => {
   return (
     <main className="mt-4">
       <div className="container">
-        <h1 className="text-3xl font-bold tracking-tight">Verify Email</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Forgot Password?</h1>
 
         <div className="my-2 h-1 bg-muted" />
         <div className="rounded bg-red-100 p-4">
@@ -55,9 +55,9 @@ const TokenIsInvalidState = () => {
           <span>
             Click{" "}
             <Button variant="link" size="sm" className="px-0" asChild>
-              <Link href="/auth/signup">here</Link>
+              <Link href="/auth/signin">here</Link>
             </Button>{" "}
-            to sign up again.
+            to sign in page so you can request a new forgot password email.
           </span>
         </div>
       </div>

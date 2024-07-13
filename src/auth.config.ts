@@ -4,8 +4,8 @@ import db from "@/drizzle";
 import * as schema from "@/drizzle/schema";
 import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
-import { changeUserRole } from "@/actions/change-user-role";
-import { verifyOAuthEmailAction } from "@/actions/verify-oauth-email-action";
+import { changeUserRole } from "@/actions/auth/change-user-role";
+import { verifyOAuthEmailAction } from "@/actions/auth/verify-oauth-email-action";
 
 export const authConfig = {
   adapter: DrizzleAdapter(db, {
@@ -67,11 +67,7 @@ export const authConfig = {
       }
 
       if (account?.provider === "credentials") {
-        if (user.emailVerified) {
-          // return true;
-        }
-
-        return true;
+        if (user.emailVerified) return true;
       }
 
       return false;
