@@ -30,7 +30,7 @@ export default function Page() {
           <Li done>User Roles</Li>
           <Li done>Admin Dashboard</Li>
           <Li done>Email Verification</Li>
-          <Li>Password Reset</Li>
+          <Li done>Password Reset</Li>
         </ul>
 
         <div className="my-2 h-1 bg-muted" />

@@ -1,3 +1,5 @@
+**IMPORTANT: Make all emails viewed as lowercase**
+
 1. Create Next.js App with CLI
 
 ```bash
@@ -802,6 +804,26 @@ add access denied case to sign in action
 
 WARNING!!! cache issues when testing stuff out, delete `.next` if anything
 
-78. password reset
+78. Forgot Password
 
-78.1 create UI
+78.1 create UI in `/auth/signup`
+
+78.2 create forgot-password-action
+
+deter oauth
+
+79 create reset password form
+
+reverify in the server action
+
+79.1 create reset-password-action
+
+same thoughts on verification tokens
+
+EXTENSIONS:
+
+1. delete user (as an admin)
+2. manage verification tokens (delete them as needed)
+3. add update to user.image
+4. add another oauth provider
+5. add a third role

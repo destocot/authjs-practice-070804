@@ -31,12 +31,21 @@ export async function forgotPassword(
         id: users.id,
         email: users.email,
         emailVerified: users.emailVerified,
+        password: users.password,
       })
       .from(users)
       .where(eq(users.email, email));
 
     // this is a false positive, to deter malicious users from knowing if an email exists in the database
     if (!existingUser?.id) return { success: true };
+
+    if (!existingUser.password) {
+      return {
+        success: false,
+        error: "This user was created with oauth, please sign in with oauth",
+        statusCode: 401,
+      };
+    }
 
     if (!existingUser.emailVerified) {
       return {
