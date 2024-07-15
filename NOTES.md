@@ -721,10 +721,13 @@ Let's write some logic to show if you are a user or an admin.
 
 69. The `process.env` method
 
-69.1 have to add to `jwt callback` and `create user` event
-requrie re-log or add to `jwt callback`
+- single admin
+- array admin (comma delimited string)
 
-69.2 add to signup action
+  69.1 have to add to `jwt callback` and `create user` event
+  requrie re-log or add to `jwt callback`
+
+  69.2 add to signup action
 
 70. the ADMIN dashboard (dashboard method)
 
