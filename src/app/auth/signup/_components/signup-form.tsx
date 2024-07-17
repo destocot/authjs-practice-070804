@@ -61,7 +61,11 @@ export const SignupForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(submit)} className="max-w-[400px] space-y-6">
+      <form
+        onSubmit={handleSubmit(submit)}
+        className="max-w-[400px] space-y-6"
+        autoComplete="off"
+      >
         <FormField
           control={control}
           name="name"
