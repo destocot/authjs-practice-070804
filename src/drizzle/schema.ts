@@ -6,22 +6,35 @@ import {
   primaryKey,
   integer,
   pgEnum,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
+import type { AnyPgColumn } from "drizzle-orm/pg-core";
+import { sql, SQL } from "drizzle-orm";
+
+export function lower(email: AnyPgColumn): SQL {
+  return sql`lower(${email})`;
+}
 
 export const roleEnum = pgEnum("role", ["user", "admin"]);
 
-export const users = pgTable("user", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  name: text("name"),
-  email: text("email").notNull(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
-  image: text("image"),
-  password: text("password"),
-  role: roleEnum("role").notNull().default("user"),
-});
+export const users = pgTable(
+  "user",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    name: text("name"),
+    email: text("email").notNull(),
+    emailVerified: timestamp("emailVerified", { mode: "date" }),
+    image: text("image"),
+    password: text("password"),
+    role: roleEnum("role").notNull().default("user"),
+  },
+  (table) => ({
+    emailUniqueIndex: uniqueIndex("emailUniqueIndex").on(lower(table.email)),
+  }),
+);
 
 export const accounts = pgTable(
   "account",
